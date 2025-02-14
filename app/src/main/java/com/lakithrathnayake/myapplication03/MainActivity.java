@@ -1,8 +1,10 @@
 package com.lakithrathnayake.myapplication03;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     String data;
     private String file = "mydata";
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         ed1= findViewById(R.id.editText);
         tv= findViewById(R.id.textView2);
 
+        spinner = findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+
         b1.setOnClickListener(v -> {
             data = ed1.getText().toString();
 
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         b2.setOnClickListener(v -> {
+            spinner.setVisibility(View.VISIBLE);
             try {
                 FileInputStream fIn = openFileInput(file);
                 int c;
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     temp.append((char) c);
                 }
                 tv.setText(temp);
+                spinner.setVisibility(View.GONE);
                 Toast.makeText(getBaseContext(),"file read",Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 throw new RuntimeException(e);
